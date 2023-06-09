@@ -19,7 +19,7 @@ const StackNavigator = () => {
       <Tab.Navigator>
         <Tab.Screen 
           name="Home" 
-          component={HomeScreen} 
+          component={ HomeScreen } 
           options={{
             tabBarLabel:"Home",
             headerShown:false,
