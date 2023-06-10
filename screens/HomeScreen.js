@@ -1,6 +1,6 @@
 import { View, Text, ScrollView, Pressable, Button, TextInput, Image } from 'react-native'
 import React, { useLayoutEffect, useState } from 'react'
-import { useNavigation } from '@react-navigation/native'
+import { useNavigation, useRoute } from '@react-navigation/native'
 import {AntDesign, Ionicons, Feather} from '@expo/vector-icons'
 import  Header from '../components/Header'
 import DatePicker from 'react-native-date-ranges'
@@ -10,6 +10,7 @@ const HomeScreen = () => {
   const navigation = useNavigation()
   const [selectedDates, setSelectedDates] = useState()
   // console.log(selectedDates)
+  const route = useRoute()
   const [rooms,setRooms] = useState(1)
   const [adults, setAdults] = useState(2)
   const [children,setChildren] = useState(0)
@@ -49,6 +50,7 @@ const HomeScreen = () => {
       />
     )
   }
+  // console.log(route.params)
   return (
     <>
     <View>
@@ -57,6 +59,7 @@ const HomeScreen = () => {
         <View style={{margin:10,borderColor:"ffc72c",borderWidth:0,borderRadius:16}}>
           {/* destination */}
           <Pressable
+          onPress={() => navigation.navigate("Search")}
             style={{
               flexDirection:"row",
               alignItems:"center",
@@ -68,7 +71,8 @@ const HomeScreen = () => {
           }}
           >
             <Feather name="search" size={24} color="black" />
-            <TextInput placeholderTextColor="black" placeholder="Enter your destination"/>
+            <TextInput 
+              placeholderTextColor="black" placeholder={route?.params ? route.params.input : "Enter your destination"}/>
           </Pressable>
 
           {/* selected Dates */}
