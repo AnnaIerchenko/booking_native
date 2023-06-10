@@ -4,7 +4,7 @@ import {Ionicons, FontAwesome5} from '@expo/vector-icons'
 
 const Header = () => {
   return (
-    <View style={{backgroundColor:"#003580",height:65,flexDirection:"row",alignItems:"center",justifyContent:"space-around"}}>
+    <View style={{backgroundColor:"#003580",height:55,flexDirection:"row",alignItems:"center",justifyContent:"space-around"}}>
       <Pressable 
         style={{
           flexDirection:"row",
