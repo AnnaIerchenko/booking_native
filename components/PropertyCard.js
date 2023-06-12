@@ -15,7 +15,7 @@ const navigation = useNavigation()
         oldPrice:property.oldPrice,
         newPrice:property.newPrice,
         phtos:property.photos,
-        rooms:property.rooms,
+        availableRooms:property.rooms,
         adults:adults,
         children:children,
         rooms:rooms,
