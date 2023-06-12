@@ -3,6 +3,7 @@ import React, { useEffect, useRef } from 'react'
 import MapView, { Marker } from 'react-native-maps'
 import { useRoute } from '@react-navigation/native'
 
+
 const MapScreen = () => {
   const route = useRoute()
   // console.log(route.params)
