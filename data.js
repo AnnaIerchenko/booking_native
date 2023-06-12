@@ -1,4 +1,4 @@
-export const data = [
+export default [
   {
     id: "0",
     place: "Moscow",

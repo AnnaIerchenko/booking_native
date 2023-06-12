@@ -1,4 +1,4 @@
-import { View, Text, ScrollView, Pressable, Button, TextInput, Image } from 'react-native'
+import { View, Text, ScrollView, Pressable, Button, Alert, TextInput, Image } from 'react-native'
 import React, { useLayoutEffect, useState } from 'react'
 import { useNavigation, useRoute } from '@react-navigation/native'
 import {AntDesign, Ionicons, Feather} from '@expo/vector-icons'
@@ -51,6 +51,33 @@ const HomeScreen = () => {
     )
   }
   // console.log(route.params)
+
+  const searchPlaces = (place) => {
+    if(!route.params || !selectedDates){
+      Alert.alert(
+        "Invalid Details",
+        "Please enter all the details",
+        [
+          {
+            text: "Cancel",
+            onPress:() => console.log("Cancel Pressed"),
+            style:"cancel"
+          },
+          { text:"OK", onPress:() => console.log("OK Presses")}
+        ],
+        {cancelable: false}
+      )
+    }
+    if(route.params && selectedDates){
+      navigation.navigate("Places", {
+        rooms:rooms,
+        adults:adults,
+        children:children,
+        selectedDates:selectedDates,
+        place:place
+      })
+    }
+  }
   return (
     <>
     <View>
@@ -134,6 +161,7 @@ const HomeScreen = () => {
 
           {/* search button */}
           <Pressable
+          onPress={() => searchPlaces(route?.params.input)}
               style={{
               gap:10,
               paddingHorizontal:10,
