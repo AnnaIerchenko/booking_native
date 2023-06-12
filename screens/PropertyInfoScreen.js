@@ -3,6 +3,7 @@ import React, {useLayoutEffect} from 'react'
 import { useNavigation, useRoute } from '@react-navigation/native'
 import { pixelNormalize } from '../components/Normalize'
 import {MaterialIcons} from '@expo/vector-icons'
+import Amenities from '../components/Amenities'
 
 const PropertyInfoScreen = () => {
   const route = useRoute()
@@ -29,6 +30,7 @@ const PropertyInfoScreen = () => {
   const difference = route.params.oldPrice - route.params.newPrice
   const offerPrice = (Math.abs(difference) / route.params.oldPrice) * 100
   return (
+    <>
     <SafeAreaView>
       <ScrollView>
         <Pressable style={{flexDirection:"row",flexWrap:"wrap",margin:10}}>
@@ -174,9 +176,36 @@ const PropertyInfoScreen = () => {
             marginTop:15
           }} 
         />
-        
+        <Amenities />
+
+        {/* border */}
+        <Text 
+          style={{
+            borderColor:"#e0e0e0",
+            borderWidth:3,
+            height:1,
+            marginTop:15
+          }} 
+        />
+
       </ScrollView>
+
     </SafeAreaView>
+         <Pressable
+           style={{
+             backgroundColor: "#6CB4EE",
+             position: "absolute",
+             bottom: 20,
+             padding: 15,
+             width:"95%",
+             marginHorizontal:10,
+           }}
+         >
+           <Text style={{ textAlign: "center", color: "white",fontWeight:"bold",fontSize:17 }}>
+             Select Availabilty
+           </Text>
+         </Pressable>
+        </>
   )
 }
 
