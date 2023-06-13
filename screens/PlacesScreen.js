@@ -1,10 +1,12 @@
 import { View, Text, Pressable, ScrollView } from 'react-native'
-import React, { useLayoutEffect, useState } from 'react'
+import React, { useEffect, useLayoutEffect, useState } from 'react'
 import { useNavigation, useRoute } from '@react-navigation/native'
 import { Octicons, Ionicons, FontAwesome5, Entypo, FontAwesome} from '@expo/vector-icons'
 import hotels from '../data'
 import PropertyCard from '../components/PropertyCard'
 import { BottomModal, ModalContent, ModalFooter, ModalTitle, SlideAnimation } from 'react-native-modals'
+import { db } from '../firebase'
+import { collection, getDocs } from 'firebase/firestore'
 
 const PlacesScreen = () => {
   const data = hotels
@@ -14,7 +16,9 @@ const PlacesScreen = () => {
   const [modalVisible, setModalVisible] = useState(false)
   const [selectedFilter,setSelectedFilter] = useState([])
 
-  const [sortedData, setSortedData] = useState(data)
+  const [sortedData, setSortedData] = useState(items)
+  const [items, setItems] = useState([])
+  const [loading, setLoading] = useState(false)
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -78,6 +82,23 @@ const PlacesScreen = () => {
         break;
     }
   }
+
+  useEffect(() => {
+    if(items.length > 0) return
+    setLoading(true)
+  
+    const fetchProducts = async () => {
+      const colRef = collection(db,"places")
+      const docsSnap = await getDocs(colRef)
+      docsSnap.forEach((doc) => {
+        items.push(doc.data())
+      })
+      setLoading(false)
+    }
+    fetchProducts()
+  }, [])
+  
+  // console.log(items)
   return (
     <View>
       <Pressable
@@ -110,6 +131,9 @@ const PlacesScreen = () => {
         </Pressable>
       </Pressable>
 
+      {loading ? (
+        <Text>Fetching places...</Text>
+      ) : (
       <ScrollView style={{backgroundColor:"#f5f5f5"}}>
         {sortedData?.filter((item) => item.place === route.params.place)
         .map((item) => item.properties.map((property, index) => (
@@ -123,6 +147,7 @@ const PlacesScreen = () => {
           )
         ))}
       </ScrollView>
+      )}
 
       <BottomModal 
         onBackdropPress={() => setModalVisible(!modalVisible)}

@@ -1,12 +1,15 @@
 import { View, Text, SafeAreaView, TextInput } from 'react-native'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import {Feather} from '@expo/vector-icons'
 import SearchResults from '../components/SearchResults'
+import { collection, getDoc, getDocs } from 'firebase/firestore'
+import { db } from '../firebase'
 
 
 const SearchScreen = () => {
   const [input,setInput] = useState("")
   // console.log(input)
+  const [items, setItems] = useState([])
 
   const data = [
     {
@@ -471,6 +474,20 @@ const SearchScreen = () => {
     },
   ];
   
+useEffect(() => {
+  if(items.length > 0) return
+
+  const fetchProducts = async () => {
+    const colRef = collection(db,"places")
+    const docsSnap = await getDocs(colRef)
+    docsSnap.forEach((doc) => {
+      items.push(doc.data())
+    })
+  }
+  fetchProducts()
+}, [])
+
+// console.log(items)
   return (
     <SafeAreaView >
       <View 
